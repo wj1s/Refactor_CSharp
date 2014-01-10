@@ -3,17 +3,17 @@
     public class Account
     {
         private readonly int daysOverdrawn;
-        private readonly AccountType type;
+        private readonly AccountType accountType;
 
-        public Account(AccountType type, int daysOverdrawn)
+        public Account(AccountType accountType, int daysOverdrawn)
         {
-            this.type = type;
+            this.accountType = accountType;
             this.daysOverdrawn = daysOverdrawn;
         }
 
-        private double OverdraftCharge()
+        public double OverdraftCharge()
         {
-            if (type.isPremium())
+            if (accountType.isPremium())
             {
                 double result = 10;
                 if (daysOverdrawn > 7) result += (daysOverdrawn - 7)*0.85;
@@ -24,12 +24,7 @@
 
         public double BankCharge()
         {
-            var result = 4.5;
-            if (daysOverdrawn > 0)
-            {
-                result += OverdraftCharge();
-            }
-            return result;
+            return 4.5 + OverdraftCharge();
         }
     }
 }
